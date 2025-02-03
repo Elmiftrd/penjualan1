@@ -1,0 +1,32 @@
+@startuml
+entity campaign {
+tipe_campaign
+tanggal_mulai 
+tanggal_selesai
+budget_campaign
+}
+
+entity customer {
+nama_customer
+usia
+domisili
+}
+
+entity transaksi {
+nama_customers (Fk)
+tanggal_transaksi
+nama_sales
+nilai_transaksi 
+tipe_produk
+}
+
+campaign ||--o{ transaksi 
+note on link
+dipengaruhi 
+end note
+
+customer ||--o{ transaksi
+note on link
+melakukan 
+end note
+@enduml
