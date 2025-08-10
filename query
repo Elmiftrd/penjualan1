@@ -7,9 +7,28 @@ Total transaksi dari masing-masing kota
 SELECT customer.domisili, sum(transaksi.nilai_transaksi) as total_nilai_transaksi from customer join transaksi on(customer.nama_customer=transaksi.nama_customer) 
 group by customer.domisili
 
-Lakukanlah EDA (Exploratory Data Analysis) pada data tersebut melalui
-MySQL.
-SELECT count(*) as banyak_transaksi, sum(nilai_transaksi) as total_nilai_transaksi, min(nilai_transaksi) as nilai_transaksi_terkecil, 
-max(nilai_transaksi) as nilai_transaksi_terbesar, 
-avg(nilai_transaksi) as rata_rata_nilai_transaksi from transaksi;
+Statistik pada tabel transaksi 
+SELECT COUNT(*) AS banyak_transaksi, AVG(nilai_transaksi) AS rata2_nilai_transaksi, MIN(nilai_transaksi) AS nilai_transaksi_terkecil, 
+MAX(nilai_transaksi) AS nilai_transaksi_terbesar, SUM(nilai_transaksi) AS total_nilai_transaksi FROM Transaksi; 
+
+
+banyak transaksi dari masing masing produk
+select tipe_produk,count(*) as banyak_transaksi from transaksi 
+group by tipe_produk
+order by banyak_transaksi asc
+
+Banyak transaksi dari masing-masing campaign
+select campaign.tipe_campaign,count(transaksi.tanggal_transaksi) as banyak_transaksi FROM campaign left join transaksi on transaksi.tanggal_transaksi BETWEEN campaign.tanggal_mulai AND campaign.tanggal_selesai 
+group by campaign.tipe_campaign
+
+Banyak dan total nilai transaksi perbulan
+SELECT EXTRACT(MONTH FROM tanggal_transaksi) AS bulan, SUM(nilai_transaksi) AS total_nilai_transasksi, 
+Count(*) AS banyak_transaksi FROM Transaksi GROUP BY bulan ORDER BY bulan;
+
+keuntungan penjualan
+SELECT c.tipe_campaign, c.budget_campaign, COUNT(t.tanggal_transaksi) AS banyak_transaksi, COALESCE(SUM(t.nilai_transaksi), 0) AS total_nilai_transaksi, 
+COALESCE(SUM(t.nilai_transaksi), 0) - c.budget_campaign AS keuntungan FROM Campaign c LEFT JOIN Transaksi t ON t.tanggal_transaksi BETWEEN c.tanggal_mulai AND c.tanggal_selesai 
+GROUP BY c.tipe_campaign ORDER BY c.tipe_campaign; 
+
+
 
