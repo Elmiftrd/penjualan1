@@ -1,0 +1,15 @@
+Total transaksi dari masing-masing customer
+select customer.nama_customer,customer.usia,customer.domisili,COUNT(transaksi.nama_customer) as banyak_transaksi, 
+sum(transaksi.nilai_transaksi) as total_nilai_transaksi from customer join transaksi on (customer.nama_customer=transaksi.nama_customer) 
+group by customer.nama_customer;
+
+Total transaksi dari masing-masing kota
+SELECT customer.domisili, sum(transaksi.nilai_transaksi) as total_nilai_transaksi from customer join transaksi on(customer.nama_customer=transaksi.nama_customer) 
+group by customer.domisili
+
+Lakukanlah EDA (Exploratory Data Analysis) pada data tersebut melalui
+MySQL.
+SELECT count(*) as banyak_transaksi, sum(nilai_transaksi) as total_nilai_transaksi, min(nilai_transaksi) as nilai_transaksi_terkecil, 
+max(nilai_transaksi) as nilai_transaksi_terbesar, 
+avg(nilai_transaksi) as rata_rata_nilai_transaksi from transaksi;
+
